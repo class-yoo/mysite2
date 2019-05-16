@@ -12,30 +12,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cafe24.mysite.repository.dao.UserDao;
 import com.cafe24.mysite.repository.vo.UserVo;
+import com.cafe24.mysite.service.UserService;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
 	@Autowired
-	private UserDao userDao;
+	private UserService userService;
 
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public String join() {
-
+		
 		return "user/join";
 	}
 
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public String join(@ModelAttribute UserVo userVo) {
-		userDao.insertUser(userVo);
+		
+		userService.join(userVo);
 
 		return "redirect:/user/joinsuccess";
 	}
 
 	@RequestMapping("/joinsuccess")
-	public String joinSuccess(@ModelAttribute UserVo userVo) {
-
+	public String joinSuccess() {
+		
 		return "user/joinsuccess";
 	}
 
@@ -49,7 +51,8 @@ public class UserController {
 			@RequestParam(value = "password", required = true, defaultValue = "") String password, HttpSession session,
 			Model model) {
 
-		UserVo authUser = userDao.get(email, password);
+		UserVo authUser = userService.getUser(new UserVo(email, password));
+		
 		if (authUser == null) {
 			model.addAttribute("result", "fail");
 			return "user/login";
@@ -69,6 +72,41 @@ public class UserController {
 
 		return "redirect:/";
 
+	}
+	
+	
+	@RequestMapping(value = "/update")
+	public String update(Model model ,HttpSession session) {
+		
+		
+		UserVo userVo = userService.getUser(((UserVo)session.getAttribute("authUser")).getNo());
+		
+		model.addAttribute("name", userVo.getName());
+		model.addAttribute("email", userVo.getEmail());
+		model.addAttribute("gender", userVo.getGender());
+		
+		return "user/update";
+	}
+	
+	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String logout(@RequestParam(value = "name", required = true, defaultValue = "") String name,
+			@RequestParam(value = "password", required = true, defaultValue = "") String password,
+			@RequestParam(value = "gender", required = true, defaultValue = "") String gender,
+			HttpSession session) {
+		
+		UserVo userVo = new UserVo();
+		userVo.setName(name);
+		userVo.setPassword(password);
+		userVo.setGender(gender);
+		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		userVo.setNo(authUser.getNo());
+		
+		userService.updateUser(userVo);
+		authUser.setName(name);
+		
+		return "redirect:/";
 	}
 
 }

@@ -18,20 +18,20 @@
 		<div id="content">
 			<div id="user">
 
-				<form id="join-form" name="updateform" method="post" action="${pageContext.servletContext.contextPath}/user">
+				<form id="join-form" name="updateform" method="post" action="${pageContext.servletContext.contextPath}/user/update">
 	
 					<input type="hidden" name="a" value="update"> 
 					<label class="block-label" for="name">이름</label> 
-					<input id="name" name="name" type="text" value='${requestScope.userVo.name}'> 
+					<input id="name" name="name" type="text" value='${name}'> 
 					<label class="block-label" for="email">이메일</label> 
-					<input id="email" name="email" type="text" value='${requestScope.userVo.email}' disabled> 
+					<input id="email" name="email" type="text" value='${email}' disabled> 
 					<label class="block-label">패스워드</label> 
 					<input name="password" type="password" value="">
 		
 					<fieldset>
 						<legend>성별</legend>
 						<c:choose>
-							<c:when test='${requestScope.userVo.gender == "female"}'>
+							<c:when test='${gender == "female"}'>
 								<label>여</label> <input type="radio" name="gender" value="female" checked="checked">
 								<label>남</label> <input type="radio" name="gender" value="male">
 							</c:when>

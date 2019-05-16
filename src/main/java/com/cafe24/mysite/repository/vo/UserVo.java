@@ -9,6 +9,15 @@ public class UserVo {
 	private String gender;
 	private String joinDate;
 
+	public UserVo() {}
+	
+	public UserVo(String email , String password) {
+		this.email =email;
+		this.password = password;
+		
+	}
+	
+	
 	public Long getNo() {
 		return no;
 	}

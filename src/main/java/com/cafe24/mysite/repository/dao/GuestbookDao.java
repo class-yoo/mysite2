@@ -44,7 +44,7 @@ public class GuestbookDao {
 				if (pstmt != null) {
 					pstmt.close();
 				}
-
+				
 				if (conn != null && !conn.isClosed()) {
 					conn.close();
 				}
