@@ -2,10 +2,13 @@ package com.cafe24.mysite.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cafe24.mysite.repository.vo.GuestbookVo;
@@ -29,7 +32,16 @@ public class GuestbookController {
 		return "guestbook/list";
 	}
 	
+	
 	@RequestMapping("/delete")
+	public String deleteGuestbook(@RequestParam(value = "no", required = true, defaultValue = "0") Long no,
+			Model model) {
+		
+		model.addAttribute("no", no);
+		return "guestbook/deleteform";
+	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String deleteGuestbook(@RequestParam(value = "no", required = true, defaultValue = "0") Long no,
 			@RequestParam(value = "password", required = true, defaultValue = "") String password
 			) {
@@ -50,7 +62,5 @@ public class GuestbookController {
 		
 		return "redirect:/guestbook/list";
 	}
-	
-	
 	
 }

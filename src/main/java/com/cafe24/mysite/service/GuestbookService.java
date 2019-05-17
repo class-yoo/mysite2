@@ -13,16 +13,20 @@ public class GuestbookService {
 
 	@Autowired
 	private GuestbookDao guestbookDao;
-
+	
+	
+	
 	public List<GuestbookVo> getGuestbookList() {
+		
+		
 		return guestbookDao.getList();
 	}
-
+	
 	public Boolean createGuestbook(GuestbookVo guestbookVo) {
 
 		return guestbookDao.insertGuestbook(guestbookVo);
 	}
-
+	
 	public Boolean deleteGuestbook(GuestbookVo guestbookVo) {
 
 		return guestbookDao.deleteGuestbook(guestbookVo);

@@ -5,11 +5,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cafe24.mysite.exception.UserDaoException;
 import com.cafe24.mysite.repository.dao.UserDao;
 import com.cafe24.mysite.repository.vo.UserVo;
 import com.cafe24.mysite.service.UserService;
@@ -23,13 +25,13 @@ public class UserController {
 
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public String join() {
-		
+
 		return "user/join";
 	}
 
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public String join(@ModelAttribute UserVo userVo) {
-		
+
 		userService.join(userVo);
 
 		return "redirect:/user/joinsuccess";
@@ -37,7 +39,7 @@ public class UserController {
 
 	@RequestMapping("/joinsuccess")
 	public String joinSuccess() {
-		
+
 		return "user/joinsuccess";
 	}
 
@@ -45,14 +47,14 @@ public class UserController {
 	public String login() {
 		return "user/login";
 	}
-
+	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(@RequestParam(value = "email", required = true, defaultValue = "") String email,
 			@RequestParam(value = "password", required = true, defaultValue = "") String password, HttpSession session,
 			Model model) {
 
 		UserVo authUser = userService.getUser(new UserVo(email, password));
-		
+
 		if (authUser == null) {
 			model.addAttribute("result", "fail");
 			return "user/login";
@@ -66,47 +68,44 @@ public class UserController {
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
-		
+
 		session.removeAttribute("authUser");
 		session.invalidate();
 
 		return "redirect:/";
 
 	}
-	
-	
+
 	@RequestMapping(value = "/update")
-	public String update(Model model ,HttpSession session) {
-		
-		
-		UserVo userVo = userService.getUser(((UserVo)session.getAttribute("authUser")).getNo());
-		
+	public String update(Model model, HttpSession session) {
+
+		UserVo userVo = userService.getUser(((UserVo) session.getAttribute("authUser")).getNo());
+
 		model.addAttribute("name", userVo.getName());
 		model.addAttribute("email", userVo.getEmail());
 		model.addAttribute("gender", userVo.getGender());
 		
 		return "user/update";
 	}
-	
-	
+
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String logout(@RequestParam(value = "name", required = true, defaultValue = "") String name,
 			@RequestParam(value = "password", required = true, defaultValue = "") String password,
-			@RequestParam(value = "gender", required = true, defaultValue = "") String gender,
-			HttpSession session) {
-		
+			@RequestParam(value = "gender", required = true, defaultValue = "") String gender, HttpSession session) {
+
 		UserVo userVo = new UserVo();
 		userVo.setName(name);
 		userVo.setPassword(password);
 		userVo.setGender(gender);
-		
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
+
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		userVo.setNo(authUser.getNo());
-		
+
 		userService.updateUser(userVo);
 		authUser.setName(name);
-		
+
 		return "redirect:/";
 	}
-
+	
+	
 }

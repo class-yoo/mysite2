@@ -14,28 +14,48 @@
 	</welcome-file-list>
 	
 	<!-- Dispatcher Server (Front Controller)-->
+	<!-- <servlet-name>spring</servlet-name> 으로 설정을 했기 때문에 spring-servlet.xml 파일을 찾는다 -->
+	<!--  spring-servlet.xml 파일의 이름은 ( <servlet-name>의 값 ) + ( -servlet.xml ) 이 되어 생성된 이름-->
 	<servlet>
 		<servlet-name>spring</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class> <!-- 만들어진 클래스 사용 -->
 	</servlet>
 	
 	<servlet-mapping>
-	
 		<servlet-name>spring</servlet-name>
 		<url-pattern>/</url-pattern> <!-- 모든 요청을 DispatcherServlet이 받기위해 설정 -->
 	</servlet-mapping>
 
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/applicationContext.xml</param-value>
-	</context-param>
+
+	<!-- 공통 에러페이지 -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/views/error/404.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/views/error/500.jsp</location>
+	</error-page>
 
 	<!-- Context Loader Listener -->
+	<!-- 1. tomcat 실행되면  web.xml 파일을 읽어서 listener로 설정된 ContextLoaderListener 객체를 호출하여 contextLoader() 메소드를 실행함 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-
 	
+	<!-- 2. ContextLoaderListener 호출하면 부모클래스인 ContextLoader가 실행되면서  Root Application Context를 생성함 -->
+	<!-- 그런 다음 contextConfigLocation으로 설정되어있던 xml파일을 읽음  >>>> "/WEB-INF/applicationContext.xml" 파일로 -->
+	<!-- <context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/applicationContext.xml</param-value>
+	</context-param> -->
+	
+	<!-- web관련 xml파일과 경로 구분을 두기 위해 classpath: 로설정 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value> <!--  -->
+	</context-param>
+		
 	<filter>
 		<filter-name>encodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

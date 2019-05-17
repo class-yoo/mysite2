@@ -1,5 +1,7 @@
 package com.cafe24.mysite.repository.vo;
 
+import org.apache.ibatis.type.Alias;
+
 public class UserVo {
 	
 	private Long no;
@@ -25,7 +27,7 @@ public class UserVo {
 	public void setNo(Long no) {
 		this.no = no;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
