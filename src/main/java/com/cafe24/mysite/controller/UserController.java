@@ -42,7 +42,7 @@ public class UserController {
 
 		return "user/joinsuccess";
 	}
-
+	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login() {
 		return "user/login";
@@ -52,7 +52,7 @@ public class UserController {
 	public String login(@RequestParam(value = "email", required = true, defaultValue = "") String email,
 			@RequestParam(value = "password", required = true, defaultValue = "") String password, HttpSession session,
 			Model model) {
-
+		
 		UserVo authUser = userService.getUser(new UserVo(email, password));
 
 		if (authUser == null) {

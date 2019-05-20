@@ -16,7 +16,15 @@
 		</selectKey>
 	</insert>
 
-	<select id="getByNo" resultType="uservo" parameterType="Long">
+	<select id="getByEmail" resultType="uservo" parameterType="string">
+		<![CDATA[
+		select no, name, email, gender
+		from user
+		where email= #{email}
+		]]>
+	</select>
+	
+	<select id="getByNo" resultType="uservo" parameterType="long">
 		<![CDATA[
 		select name, email, gender
 		from user

@@ -50,7 +50,7 @@
 		<param-value>/WEB-INF/applicationContext.xml</param-value>
 	</context-param> -->
 	
-	<!-- web관련 xml파일과 경로 구분을 두기 위해 classpath: 로설정 -->
+	<!-- web관련 xml파일과 경로 구분을 두기 위해 /WEB-INF/ -> classpath: 로설정 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:applicationContext.xml</param-value> <!--  -->
@@ -69,11 +69,10 @@
 			<param-value>true</param-value>
 		</init-param>
 	</filter>
-
+	
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-
-
+	
 </web-app>
