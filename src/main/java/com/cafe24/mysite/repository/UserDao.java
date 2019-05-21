@@ -1,11 +1,12 @@
-package com.cafe24.mysite.repository.dao;
+package com.cafe24.mysite.repository;
 
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import com.cafe24.mysite.repository.vo.UserVo;
+
+import com.cafe24.mysite.vo.UserVo;
 
 @Repository
 public class UserDao {

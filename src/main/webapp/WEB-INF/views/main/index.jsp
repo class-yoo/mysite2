@@ -27,10 +27,8 @@
 				</div>
 			</div>
 		</div>
-			<c:import url="/WEB-INF/views/includes/navigation.jsp">
-				<c:param name="menu" value="main"></c:param>
-			</c:import>
-		<jsp:include page="/WEB-INF/views/includes/footer.jsp" />
+		<c:import url="/WEB-INF/views/includes/navigation.jsp"/>
+		<c:import url="/WEB-INF/views/includes/footer.jsp"/>
 	</div>
 </body>
 </html>

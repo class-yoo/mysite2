@@ -23,6 +23,7 @@ public class UserController {
 	@RequestMapping("/checkemail")
 	public JSONResult checkEmail(
 			@RequestParam(value="checkemail", required=true, defaultValue="") String email) {
+		System.out.println("email: "+email);
 			Boolean exist = userService.existEmail(email);
 			
 		return JSONResult.success(exist);

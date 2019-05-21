@@ -1,6 +1,15 @@
-package com.cafe24.mysite.repository.vo;
+package com.cafe24.mysite.vo;
 
 public class GuestbookVo {
+	
+	public enum StatusType{
+		ACTIVE,
+		DELETED,
+		HIDDEN
+	}
+	
+	private StatusType status;
+	
 	private Long no;
 	private String name;
 	private String password;

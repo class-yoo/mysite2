@@ -1,4 +1,4 @@
-package com.cafe24.mysite.repository.vo;
+package com.cafe24.mysite.vo;
 
 import org.apache.ibatis.type.Alias;
 

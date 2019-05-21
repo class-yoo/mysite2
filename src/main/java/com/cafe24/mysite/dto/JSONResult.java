@@ -1,5 +1,6 @@
 package com.cafe24.mysite.dto;
 
+
 public class JSONResult {
 	
 		private String result; //success, fail
@@ -7,7 +8,7 @@ public class JSONResult {
 		private Object data; // if success, set 
 		
 		public static JSONResult success(Object data) {
-			return new JSONResult("sucess", null, data);
+			return new JSONResult("success", null, data);
 		}
 		
 		public static JSONResult fail(String message) {

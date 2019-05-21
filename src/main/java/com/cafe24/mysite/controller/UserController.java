@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cafe24.mysite.exception.UserDaoException;
-import com.cafe24.mysite.repository.dao.UserDao;
-import com.cafe24.mysite.repository.vo.UserVo;
+import com.cafe24.mysite.repository.UserDao;
 import com.cafe24.mysite.service.UserService;
+import com.cafe24.mysite.vo.UserVo;
 
 @Controller
 @RequestMapping("/user")
@@ -31,9 +31,9 @@ public class UserController {
 
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public String join(@ModelAttribute UserVo userVo) {
-
+		
 		userService.join(userVo);
-
+		
 		return "redirect:/user/joinsuccess";
 	}
 
