@@ -10,6 +10,7 @@ public class BoardVo {
 	private int groupNo;
 	private int orderNo;
 	private int depth;
+	private Long parentNo;
 	private Long userNo;
 	private String userName;
 
@@ -91,6 +92,14 @@ public class BoardVo {
 	
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public Long getParentNo() {
+		return parentNo;
+	}
+
+	public void setParentNo(Long parentNo) {
+		this.parentNo = parentNo;
 	}
 
 }

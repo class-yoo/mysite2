@@ -6,7 +6,7 @@
 <%
 	pageContext.setAttribute("newline", "\n");
 %>
-    
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,7 +43,7 @@
 						<a href="${pageContext.servletContext.contextPath}/board/modify?no=${vo.no}">글수정</a>
 					</c:when>
 					<c:when test="${authUser !=null && vo.userNo != authUser.no}">
-						<a href="${pageContext.servletContext.contextPath}/board/write?
+						<a href="${pageContext.servletContext.contextPath}/board/write?no=${vo.no}&
 						groupNo=${vo.groupNo}&orderNo=${vo.orderNo}&depth=${vo.depth}">댓글달기</a>
 					</c:when>
 					</c:choose>

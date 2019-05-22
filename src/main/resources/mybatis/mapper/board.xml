@@ -29,16 +29,24 @@
 		<![CDATA[
 		insert 
 		into board
-		values (null , #{title}, #{contents}, 0, now(), (select max(group_no)+1 from board as b), 1 , 0, #{userNo})
+		values (null , #{title}, #{contents}, 0, now(), 
+		(select ifnull ((select max(group_no) from board as b), 1)), 1 , 0, 0, #{userNo})
 		]]>
 	</insert>
 	
-	<!-- 해당 그룹의 최근 order_no를  가져와서 +1 해서 넣어준다. -->
 	<insert id="insertReplyBoard" parameterType="boardvo">
 		<![CDATA[
 		insert 
 		into board
-		values (null , #{title}, #{contents}, 0, now(), #{groupNo},  #{orderNo}+1 , #{depth}+1 , #{userNo})
+		values (null , #{title}, #{contents}, 0, now(), #{groupNo},  #{orderNo}+1 , #{depth}+1, #{parentNo}, #{userNo})
+		]]>
+	</insert>
+	
+	<insert id="insertParentNoAndSubNo" parameterType="boardvo">
+		<![CDATA[
+		insert 
+		into reply
+		values (#{parentNo}, #{no})
 		]]>
 	</insert>
 	
@@ -58,12 +66,12 @@
 		]]>
 	</update>
 	
-	<delete id="delete" parameterType="boardvo">
+	<delete id="deleteBoard" parameterType="long">
 		<![CDATA[
-			delete
+			delete 
 			from board
-			where no= #{no}
+			where parent_no = #{boardNo} or no = #{boardNo};
 		]]>
 	</delete>
-	 
+	
 </mapper>

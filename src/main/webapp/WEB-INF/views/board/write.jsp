@@ -36,6 +36,7 @@
 						<input type="hidden" name ="groupNo" value = "${groupNo}">
 						<input type="hidden" name ="orderNo" value = "${orderNo}">
 						<input type="hidden" name ="depth" value = "${depth}">
+						<input type="hidden" name ="parentNo" value = "${parentNo}">
 						
 						<input type="submit" value="등록">
 					</div>

@@ -65,14 +65,16 @@ public class BoardController {
 	@RequestMapping("write")
 	public String write(
 			Model model,
-			@RequestParam(value = "groupNo", required = true, defaultValue = "-1") int groupNo,
+			@RequestParam(value = "groupNo", required = true, defaultValue = "0") int groupNo,
 			@RequestParam(value = "orderNo", required = true, defaultValue = "0") int orderNo,
-			@RequestParam(value = "depth", required = true, defaultValue = "0") int depth
+			@RequestParam(value = "depth", required = true, defaultValue = "0") int depth,
+			@RequestParam(value = "no", required = true, defaultValue = "-1") int parentNo
 			) {
 		
 		model.addAttribute("groupNo", groupNo);
 		model.addAttribute("orderNo", orderNo);
 		model.addAttribute("depth", depth);
+		model.addAttribute("parentNo", parentNo);
 		
 		return "board/write";
 	}
@@ -83,14 +85,12 @@ public class BoardController {
 			Model model, 
 			@ModelAttribute BoardVo boardVo,
 			HttpSession session) {
-			
+		
 		Long userNo = ((UserVo) session.getAttribute("authUser")).getNo();
 		boardVo.setUserNo(userNo);
-		if(boardVo.getGroupNo() == -1) {
-			
+		if(boardVo.getParentNo() == -1) {
 			BoardService.createBoard(boardVo);
 		}else {
-			
 			BoardService.createReplyBoard(boardVo);
 		}
 		
@@ -101,7 +101,7 @@ public class BoardController {
 	@RequestMapping("remove")
 	public String remove(
 			@RequestParam(value="no", required=true, defaultValue="0") Long boardNo) {
-		
+			
 		 	BoardService.removeBoard(boardNo);
 		 	
 		return "redirect:/board/list";

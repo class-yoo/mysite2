@@ -24,7 +24,7 @@ public class UserController {
 
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public String join(@ModelAttribute UserVo userVo) {
-
+		
 		return "user/join";
 	}
 	
@@ -34,7 +34,7 @@ public class UserController {
 			@ModelAttribute @Valid UserVo userVo, 
 			BindingResult result,
 			Model model) {
-		
+			
 		if(result.hasErrors()) {
 //			List<ObjectError> list = result.getAllErrors();
 //			for(ObjectError error : list) {
