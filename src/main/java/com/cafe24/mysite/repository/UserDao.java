@@ -5,6 +5,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StopWatch;
 
 import com.cafe24.mysite.vo.UserVo;
 
@@ -32,7 +33,12 @@ public class UserDao {
 	
 	public UserVo get(String email) {
 
+		StopWatch sw = new StopWatch();
+		sw.start();
 		UserVo userVo = sqlSession.selectOne("user.getByEmail", email);
+		sw.stop();
+		
+		System.out.println(sw.getTotalTimeMillis());
 		
 		return userVo;
 	}

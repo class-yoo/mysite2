@@ -85,10 +85,12 @@ public class BoardController {
 			HttpSession session) {
 			
 		Long userNo = ((UserVo) session.getAttribute("authUser")).getNo();
+		boardVo.setUserNo(userNo);
 		if(boardVo.getGroupNo() == -1) {
-			boardVo.setUserNo(userNo);
+			
 			BoardService.createBoard(boardVo);
 		}else {
+			
 			BoardService.createReplyBoard(boardVo);
 		}
 		
@@ -96,13 +98,12 @@ public class BoardController {
 		
 	}
 	
-//	@RequestMapping("delete")
-//	public String delete(
-//			@RequestParam(value="no", required=true, defaultValue="0") Long boardNo) {
-//		
-//		BoardVo boardVo = BoardService.deleteBoard(boardNo);
-//		model.addAttribute("vo", boardVo);
-//		
-//		return "redirect:/board/list";
-//	}
+	@RequestMapping("remove")
+	public String remove(
+			@RequestParam(value="no", required=true, defaultValue="0") Long boardNo) {
+		
+		 	BoardService.removeBoard(boardNo);
+		 	
+		return "redirect:/board/list";
+	}
 }

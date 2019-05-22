@@ -21,7 +21,7 @@
 	
 	<!-- 3. base-package이 범위내에 있는 @Repository, @Service, @Component 어노테이션이 설정되어 있는 클래스들을 -->
 	<!--  객체생성하여  Root Application Context에 저장함  >>>>> 여기까지가 Tomcat을 실행 했을때 과정-->
-	<context:component-scan base-package="com.cafe24.mysite.repository, com.cafe24.mysite.service">
+	<context:component-scan base-package="com.cafe24.mysite.repository, com.cafe24.mysite.service, com.cafe24.mysite.aspect">
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Repository" />
 		<context:include-filter type="annotation"

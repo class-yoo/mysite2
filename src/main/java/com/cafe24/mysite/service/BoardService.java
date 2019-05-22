@@ -28,13 +28,19 @@ public class BoardService {
 	}
 	
 	public Boolean createReplyBoard(BoardVo boardVo) {
-			
-		return 1== boardDao.increaseOrderNo(boardVo) && 1 == boardDao.insertReplyBoard(boardVo);
+		boardDao.increaseOrderNo(boardVo);
+		return  1 == boardDao.insertReplyBoard(boardVo); 
 	}
 
 	public Boolean modify(BoardVo boardVo) {
-
+		
 		return 1 == boardDao.updateBoard(boardVo);
+	}
+
+	public Boolean removeBoard(Long boardNo) {
+		
+		
+		return 1 == boardDao.deleteBoard(boardNo);
 	}
 
 }
