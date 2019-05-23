@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cafe24.mysite.security.Auth;
 import com.cafe24.mysite.service.BoardService;
+import com.cafe24.mysite.util.Paging;
 import com.cafe24.mysite.vo.BoardVo;
 import com.cafe24.mysite.vo.UserVo;
 
@@ -26,12 +27,19 @@ public class BoardController {
 	
 	@RequestMapping("list")
 	public String list(Model model, 
-			@RequestParam(value="startPageNum", required=true, defaultValue="0") int startPageNum,
-			@RequestParam(value="showBoardNum", required=true, defaultValue="0") int showBoardNum
+			@RequestParam(value="curPageNum", required=true, defaultValue="1") int curPageNum,
+			@RequestParam(value="showBoardNum", required=true, defaultValue="5") int showBoardNum
 			) {
 		
-		List<BoardVo> list = BoardService.getBoardList(startPageNum, showBoardNum);
+		System.out.println(curPageNum);
 		
+		Paging paging = new Paging();
+		Long totalBoardCount = BoardService.getTotalBoardCount();
+		paging.pagingSetting(totalBoardCount, showBoardNum , curPageNum);
+		
+		List<BoardVo> list = BoardService.getBoardList(paging.getStartPageNum(), showBoardNum);
+		System.out.println("controllerpaging.getBlockStartNum()= "+ paging.getBlockStartNum());
+		model.addAttribute("paging", paging);
 		model.addAttribute("list", list);
 		
 		return "board/list";
@@ -70,7 +78,7 @@ public class BoardController {
 	
 	// 인증하고 들어왔을때는 write 화면이 나와야하는데  인증이 안되어있으면 로그인 화면으로 리다이렉트
 	
-	@Auth
+//	@Auth
 	@RequestMapping("write")
 	public String write(
 			Model model,

@@ -10,16 +10,19 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.cafe24.mysite.vo.UserVo;
 
 public class AuthInterceptor extends HandlerInterceptorAdapter {
-
+	
+	// spring-servlet.xml에 	<mvc:interceptors> <mvc:mapping path="/**"/> 에 명시되어서 모든 url 요청이 여기에 들린다. 
+	// 만약 preHandle이 실행된 후 리턴값이 false이면 컨트롤러로 안가고, true이면 컨트롤러로 요청을 전달한다.
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
 		// 1. handler 종류 확인
 		if (handler instanceof HandlerMethod == false) {
+			System.out.println(handler);
 			return true;
 		}
-
+		
 		// 2. casting
 		HandlerMethod handlerMethod = (HandlerMethod) handler;
 
@@ -67,7 +70,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		// authIser.getRole().equals("ADMIN")
 		
 		
-		return true;
+		return false;
 	}
 
 }

@@ -12,8 +12,7 @@
 
 	<!-- auto proxy -->
 	<aop:aspectj-autoproxy expose-proxy="false" />
-
-
+	
 	<!-- 1. validator, conversionService, messageConvertor -->
 	<mvc:annotation-driven>
 		<mvc:message-converters>
@@ -38,10 +37,23 @@
 				</property>
 			</bean>
 		</mvc:message-converters>
+
+		<!-- argument resolver -->
+		<mvc:argument-resolvers>
+			<bean
+				class="com.cafe24.mysite.security.AuthUserHandlerMethodArgumentResolver" />
+		</mvc:argument-resolvers>
+
+	
+	
 	</mvc:annotation-driven>
 
 	<!-- 2. 서블릿 컨테이너의 디폴트 서블릿 위임 핸들러 -->
 	<mvc:default-servlet-handler />
+
+	<!-- the mvc resources url mapping d:/mysite-uploads/-->
+	<!-- url이 images/profile/파일명 으로 들어오면 프로젝트가 시작된 d://mysite-uploads/profile/ 밑에서 파일을 찾아서 응답한다. -->
+	<mvc:resources mapping="images/profile/**" location="file:/mysite-uploads/profile/" />
 
 	<!-- 3 .ViewResolver 설정 -->
 
@@ -62,7 +74,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<!-- Interceptors -->
 	<mvc:interceptors>
 		<mvc:interceptor>

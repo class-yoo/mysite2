@@ -31,6 +31,7 @@ public class AuthLoginInterceptor extends HandlerInterceptorAdapter {
 		UserVo authUser = userService.getUser(userVo);
 		if(authUser == null) {
 			response.sendRedirect(request.getContextPath()+"/user/login");
+			return false;
 		}
 		
 		//session 처리

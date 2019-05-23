@@ -3,6 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	pageContext.setAttribute("showBoardNum", 5);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,7 +34,7 @@
 					
 					<c:forEach items='${list}' var ='vo' varStatus="status">
 					<tr>
-						<td>${list.size() - status.index}</td>
+						<td>${list.size() - status.count+1}</td>
 						<td style="text-align:left; padding-left: ${20*vo.depth}px">
 						<c:choose>
 							<c:when test="${vo.depth >  0}">
@@ -56,13 +59,26 @@
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>
-						<li><a href="">1</a></li>
-						<li class="selected">2</li>
-						<li><a href="">3</a></li>
-						<li>4</li>
-						<li>5</li>
-						<li><a href="">▶</a></li>
+					<c:if test="${paging.blockStartNum>5}">
+						<li><a href="${pageContext.servletContext.contextPath}/board/list?curPageNum=${paging.blockStartNum-1}&showBoardNum=${showBoardNum}">◀</a></li>
+					</c:if>
+							<c:forEach begin="${paging.blockStartNum}" end="${paging.blockLastNum}" varStatus="status">
+								<c:choose>
+									<c:when test="${paging.curPageNum == paging.blockStartNum+status.count-1}">
+										<li class="selected">
+											<a href="${pageContext.servletContext.contextPath}/board/list?curPageNum=${paging.blockStartNum + status.count-1}&showBoardNum=${showBoardNum}">${paging.blockStartNum+status.count-1}</a>
+										</li>
+									</c:when>
+									<c:otherwise>
+										<li>
+											<a href="${pageContext.servletContext.contextPath}/board/list?curPageNum=${paging.blockStartNum+status.count-1}&showBoardNum=${showBoardNum}">${paging.blockStartNum+status.count-1}</a>
+										</li>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+					<c:if test="${paging.blockLastNum<paging.lastPageNum}">
+						<li><a href="${pageContext.servletContext.contextPath}/board/list?curPageNum=${paging.blockLastNum+1}&showBoardNum=${showBoardNum}">▶</a></li>
+					</c:if>
 					</ul>
 				</div>					
 				<!-- pager 추가 -->

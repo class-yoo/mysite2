@@ -52,11 +52,11 @@ public class UserController {
 
 	@RequestMapping("/joinsuccess")
 	public String joinSuccess() {
-
+		
 		return "user/joinsuccess";
 	}
 	
-	@RequestMapping(value = "/loginform", method = RequestMethod.GET)
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login() {
 		return "user/login";
 	}

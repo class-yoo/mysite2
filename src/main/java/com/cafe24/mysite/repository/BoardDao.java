@@ -24,7 +24,6 @@ public class BoardDao {
 	}
 	
 	public BoardVo selectBoardByNo(Long boardNo) {
-
 		return sqlSession.selectOne("board.getBoardByNo", boardNo);
 	}
 
@@ -56,8 +55,7 @@ public class BoardDao {
 	}
 
 	public Long getTotalBoardCount() {
-		// TODO Auto-generated method stub
-		return 0L;
+		return sqlSession.selectOne("board.getTotalBoardCount");
 	}
 	
 	public Long getsearchBoardCount(String kwd) {
