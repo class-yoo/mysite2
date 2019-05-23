@@ -1,6 +1,8 @@
 package com.cafe24.mysite.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +15,14 @@ public class BoardDao {
 
 	@Autowired
 	SqlSession sqlSession;
-
-	public List<BoardVo> selectBoardList() {
-		return sqlSession.selectList("board.getBoardList");
+	
+	public List<BoardVo> selectBoardList(int startPageNum, int showBoardNum) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("startPageNum", startPageNum);
+		map.put("showBoardNum", showBoardNum);
+		return sqlSession.selectList("board.getBoardList", map);
 	}
-
+	
 	public BoardVo selectBoardByNo(Long boardNo) {
 
 		return sqlSession.selectOne("board.getBoardByNo", boardNo);
@@ -37,7 +42,7 @@ public class BoardDao {
 	}
 
 	public int updateBoard(BoardVo boardVo) {
-
+		
 		return sqlSession.update("board.updateBoard", boardVo);
 	}
 
@@ -46,18 +51,18 @@ public class BoardDao {
 		//댓글을 삭제할때 삭제되는 답글의 depth 보다 크면서 삭제되는 답글의 orderno 보다 크고 뎁스가 똑같은 답글중에서 가장
 		//작은 오더넘버를 갖는 답글의 orderno보다 작은 답글들을 삭제한다. 
 		//삭제되는 소그룹의 마지막답글의 오더넘버보다 큰애들의 오더넘버를 삭제되는 답글의 숫자만큼 감소시켜준다. > 일단 보류
-
+		
 		return sqlSession.delete("board.deleteBoard", boardNo);
 	}
 
-	public int getTotalBoardCount() {
+	public Long getTotalBoardCount() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 0L;
 	}
 	
-	public int getsearchBoardCount(String kwd) {
+	public Long getsearchBoardCount(String kwd) {
 		// TODO Auto-generated method stub
-		return 0;
+		return 0L;
 	}
 
 }

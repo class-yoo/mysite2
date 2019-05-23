@@ -14,8 +14,8 @@ public class BoardService {
 	@Autowired
 	private BoardDao boardDao;
 
-	public List<BoardVo> getBoardList() {
-		return boardDao.selectBoardList();
+	public List<BoardVo> getBoardList(int startPageNum, int showBoardNum) {
+		return boardDao.selectBoardList(startPageNum, showBoardNum);
 	}
 
 	public BoardVo getBoardByNo(Long boardNo) {

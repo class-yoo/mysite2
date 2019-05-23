@@ -68,11 +68,7 @@
 				<!-- pager 추가 -->
 				
 				<div class="bottom">
-				<c:choose>
-					<c:when test="${authUser != null}">
 					<a href="${pageContext.servletContext.contextPath}/board/write" id="new-book">글쓰기</a>
-					</c:when>
-				</c:choose>
 				</div>				
 			</div>
 		</div>

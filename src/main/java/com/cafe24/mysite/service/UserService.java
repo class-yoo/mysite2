@@ -15,7 +15,7 @@ public class UserService {
 	public Boolean join(UserVo userVo) {
 		return userDao.insertUser(userVo);
 	}
-
+	
 	public UserVo getUser(Long userNo) {
 		return userDao.get(userNo);
 	}
@@ -28,7 +28,7 @@ public class UserService {
 		
 		return userDao.updateUser(userVo);
 	}
-
+	
 	public Boolean existEmail(String email) {
 		
 		UserVo userVo = userDao.get(email);

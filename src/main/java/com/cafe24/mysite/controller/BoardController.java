@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cafe24.mysite.security.Auth;
 import com.cafe24.mysite.service.BoardService;
 import com.cafe24.mysite.vo.BoardVo;
 import com.cafe24.mysite.vo.UserVo;
@@ -22,11 +23,15 @@ public class BoardController {
 
 	@Autowired
 	private BoardService BoardService;
-
+	
 	@RequestMapping("list")
-	public String list(Model model) {
-
-		List<BoardVo> list = BoardService.getBoardList();
+	public String list(Model model, 
+			@RequestParam(value="startPageNum", required=true, defaultValue="0") int startPageNum,
+			@RequestParam(value="showBoardNum", required=true, defaultValue="0") int showBoardNum
+			) {
+		
+		List<BoardVo> list = BoardService.getBoardList(startPageNum, showBoardNum);
+		
 		model.addAttribute("list", list);
 		
 		return "board/list";
@@ -62,13 +67,17 @@ public class BoardController {
 		return "board/view";
 	}
 	
+	
+	// 인증하고 들어왔을때는 write 화면이 나와야하는데  인증이 안되어있으면 로그인 화면으로 리다이렉트
+	
+	@Auth
 	@RequestMapping("write")
 	public String write(
 			Model model,
-			@RequestParam(value = "groupNo", required = true, defaultValue = "0") int groupNo,
+			@RequestParam(value = "groupNo", required = true, defaultValue = "-1") int groupNo,
 			@RequestParam(value = "orderNo", required = true, defaultValue = "0") int orderNo,
 			@RequestParam(value = "depth", required = true, defaultValue = "0") int depth,
-			@RequestParam(value = "no", required = true, defaultValue = "-1") int parentNo
+			@RequestParam(value = "no", required = true, defaultValue = "0") int parentNo
 			) {
 		
 		model.addAttribute("groupNo", groupNo);
@@ -88,7 +97,7 @@ public class BoardController {
 		
 		Long userNo = ((UserVo) session.getAttribute("authUser")).getNo();
 		boardVo.setUserNo(userNo);
-		if(boardVo.getParentNo() == -1) {
+		if(boardVo.getGroupNo() == -1) {
 			BoardService.createBoard(boardVo);
 		}else {
 			BoardService.createReplyBoard(boardVo);
