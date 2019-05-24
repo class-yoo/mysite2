@@ -16,6 +16,10 @@ public class BoardDao {
 	@Autowired
 	SqlSession sqlSession;
 	
+	public Long getTotalBoardCount() {
+		return sqlSession.selectOne("board.getTotalBoardCount");
+	}
+	
 	public List<BoardVo> selectBoardList(int startPageNum, int showBoardNum) {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("startPageNum", startPageNum);
@@ -23,10 +27,23 @@ public class BoardDao {
 		return sqlSession.selectList("board.getBoardList", map);
 	}
 	
+	public Long getTotalSearchBoardCount(String keyword) {
+		return sqlSession.selectOne("board.getTotalSearchBoardCount", keyword);
+	}
+
+	public List<BoardVo> getSearchBoardList(String keyword, int startPageNum, int showBoardNum) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("keyword", keyword);
+		map.put("startPageNum", startPageNum);
+		map.put("showBoardNum", showBoardNum);
+		return sqlSession.selectList("board.getSearchBoardList", map);
+	}
+	
 	public BoardVo selectBoardByNo(Long boardNo) {
 		return sqlSession.selectOne("board.getBoardByNo", boardNo);
 	}
-
+	
 	public int insertBoard(BoardVo boardVo) {
 		return sqlSession.insert("board.insertBoard", boardVo);
 	}
@@ -54,13 +71,8 @@ public class BoardDao {
 		return sqlSession.delete("board.deleteBoard", boardNo);
 	}
 
-	public Long getTotalBoardCount() {
-		return sqlSession.selectOne("board.getTotalBoardCount");
-	}
 	
-	public Long getsearchBoardCount(String kwd) {
-		// TODO Auto-generated method stub
-		return 0L;
-	}
+
+	
 
 }

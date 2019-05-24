@@ -23,6 +23,14 @@ public class BoardService {
 		return boardDao.selectBoardList(startPageNum, showBoardNum);
 	}
 	
+	public Long getTotalSearchBoardCount(String keyword) {
+		return boardDao.getTotalSearchBoardCount(keyword);
+	}
+
+	public List<BoardVo> getSearchBoardList(String keyword, int startPageNum, int showBoardNum) {
+		return boardDao.getSearchBoardList(keyword, startPageNum, showBoardNum);
+	}
+	
 	public BoardVo getBoardByNo(Long boardNo) {
 		return boardDao.selectBoardByNo(boardNo);
 	}
@@ -47,7 +55,5 @@ public class BoardService {
 		
 		return 1 == boardDao.deleteBoard(boardNo);
 	}
-
-	
 
 }

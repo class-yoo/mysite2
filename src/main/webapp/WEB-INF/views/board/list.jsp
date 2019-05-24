@@ -18,8 +18,9 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="" method="post">
-					<input type="text" id="kwd" name="kwd" value="">
+				<form id="search_form" action="${pageContext.servletContext.contextPath}/board/list" method="get">
+					<input type="text" id="keyword" name="keyword" value="${keyword}">
+					<input type="hidden" id="showBoardNum" name="showBoardNum" value="${showBoardNum}">
 					<input type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
@@ -60,24 +61,24 @@
 				<div class="pager">
 					<ul>
 					<c:if test="${paging.blockStartNum>5}">
-						<li><a href="${pageContext.servletContext.contextPath}/board/list?curPageNum=${paging.blockStartNum-1}&showBoardNum=${showBoardNum}">◀</a></li>
+						<li><a href="${pageContext.servletContext.contextPath}/board/list?keyword=${keyword}&curPageNum=${paging.blockStartNum-1}&showBoardNum=${showBoardNum}">◀</a></li>
 					</c:if>
 							<c:forEach begin="${paging.blockStartNum}" end="${paging.blockLastNum}" varStatus="status">
 								<c:choose>
 									<c:when test="${paging.curPageNum == paging.blockStartNum+status.count-1}">
 										<li class="selected">
-											<a href="${pageContext.servletContext.contextPath}/board/list?curPageNum=${paging.blockStartNum + status.count-1}&showBoardNum=${showBoardNum}">${paging.blockStartNum+status.count-1}</a>
+											<a href="${pageContext.servletContext.contextPath}/board/list?keyword=${keyword}&curPageNum=${paging.blockStartNum + status.count-1}&showBoardNum=${showBoardNum}">${paging.blockStartNum+status.count-1}</a>
 										</li>
 									</c:when>
 									<c:otherwise>
 										<li>
-											<a href="${pageContext.servletContext.contextPath}/board/list?curPageNum=${paging.blockStartNum+status.count-1}&showBoardNum=${showBoardNum}">${paging.blockStartNum+status.count-1}</a>
+											<a href="${pageContext.servletContext.contextPath}/board/list?keyword=${keyword}&curPageNum=${paging.blockStartNum+status.count-1}&showBoardNum=${showBoardNum}">${paging.blockStartNum+status.count-1}</a>
 										</li>
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
 					<c:if test="${paging.blockLastNum<paging.lastPageNum}">
-						<li><a href="${pageContext.servletContext.contextPath}/board/list?curPageNum=${paging.blockLastNum+1}&showBoardNum=${showBoardNum}">▶</a></li>
+						<li><a href="${pageContext.servletContext.contextPath}/board/list?keyword=${keyword}&curPageNum=${paging.blockLastNum+1}&showBoardNum=${showBoardNum}">▶</a></li>
 					</c:if>
 					</ul>
 				</div>					

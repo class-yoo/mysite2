@@ -25,23 +25,44 @@ public class BoardController {
 	@Autowired
 	private BoardService BoardService;
 	
+//	@RequestMapping("list")
+//	public String list(Model model, 
+//			@RequestParam(value="curPageNum", required=true, defaultValue="1") int curPageNum,
+//			@RequestParam(value="showBoardNum", required=true, defaultValue="5") int showBoardNum
+//			) {
+//		
+//		Paging paging = new Paging();
+//		Long totalBoardCount = BoardService.getTotalBoardCount();
+//		paging.pagingSetting(totalBoardCount, showBoardNum , curPageNum);
+//		
+//		List<BoardVo> list = BoardService.getBoardList(paging.getStartPageNum(), showBoardNum);
+//		model.addAttribute("paging", paging);
+//		model.addAttribute("list", list);
+//		
+//		return "board/list";
+//	}
+	
 	@RequestMapping("list")
-	public String list(Model model, 
+	public String listSearch(Model model, 
+			@RequestParam(value="keyword", required=true, defaultValue="") String keyword,
 			@RequestParam(value="curPageNum", required=true, defaultValue="1") int curPageNum,
 			@RequestParam(value="showBoardNum", required=true, defaultValue="5") int showBoardNum
 			) {
 		
 		Paging paging = new Paging();
-		Long totalBoardCount = BoardService.getTotalBoardCount();
+		Long totalBoardCount = BoardService.getTotalSearchBoardCount(keyword);
 		paging.pagingSetting(totalBoardCount, showBoardNum , curPageNum);
 		
-		List<BoardVo> list = BoardService.getBoardList(paging.getStartPageNum(), showBoardNum);
+		List<BoardVo> list = BoardService.getSearchBoardList(keyword, paging.getStartPageNum(), showBoardNum);
 		model.addAttribute("paging", paging);
 		model.addAttribute("list", list);
+		model.addAttribute("keyword", keyword);
 		
 		return "board/list";
 	}
-
+	
+	
+	
 	@RequestMapping("modify")
 	public String modify(
 			Model model,
@@ -115,7 +136,7 @@ public class BoardController {
 	@RequestMapping("remove")
 	public String remove(
 			@RequestParam(value="no", required=true, defaultValue="0") Long boardNo) {
-			
+			// 삭제했을때 자신이 삭제했던페이지로 돌아가야한다.
 		 	BoardService.removeBoard(boardNo);
 		 	
 		return "redirect:/board/list";

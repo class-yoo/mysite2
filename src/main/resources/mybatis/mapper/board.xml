@@ -3,11 +3,18 @@
 
 <mapper namespace="board">
 
-
 	<select id="getTotalBoardCount" resultType="long">
 	<![CDATA[
 		select count(*)
 		from board;
+	]]>
+	</select>
+	
+	<select id="getTotalSearchBoardCount" resultType="long" parameterType="string">
+	<![CDATA[
+		select count(*)
+		from board
+		where title like concat('%',#{keyword},'%')  or contents like concat('%',#{keyword},'%')
 	]]>
 	</select>
 	
@@ -19,6 +26,20 @@
 		where a.user_no = b.no
 		order by a.group_no desc, a.order_no asc
 		limit #{startPageNum}, #{showBoardNum}
+		
+	]]>
+	</select>
+	
+	<select id="getSearchBoardList" resultType="boardvo" parameterType="map">
+	<![CDATA[
+		select a.no, a.title, a.contents, a.hit, date_format(a.reg_date, '%Y-%m-%d %h:%i:%s') as 'regDate', a.depth,
+								 b.no as 'userNo', b.name as 'userName'
+		from board a, user b
+		where a.user_no = b.no 
+		and (a.title like '%${keyword}%'
+		or a.contents like '%${keyword}%')
+		order by a.group_no desc, a.order_no asc
+		limit ${startPageNum}, ${showBoardNum}
 		
 	]]>
 	</select>
@@ -50,7 +71,7 @@
 		values (null , #{title}, #{contents}, 0, now(), #{groupNo},  #{orderNo}+1 , #{depth}+1, #{parentNo}, #{userNo})
 		]]>
 	</insert>
-
+	
 	<insert id="insertParentNoAndSubNo" parameterType="boardvo">
 		<![CDATA[
 		insert 
