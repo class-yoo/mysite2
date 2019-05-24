@@ -12,6 +12,9 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 	
+	<!-- Maven에서는 이 설정파일을선택하면 된다. -->
+	
+	
 	<!-- 이 코드는 .xml 파일에 설정을 하는 대신에 어노테이션으로 설정을 하겠다는 의미 -->
 	<context:annotation-config />
 	
