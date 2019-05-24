@@ -31,14 +31,11 @@ public class BoardController {
 			@RequestParam(value="showBoardNum", required=true, defaultValue="5") int showBoardNum
 			) {
 		
-		System.out.println(curPageNum);
-		
 		Paging paging = new Paging();
 		Long totalBoardCount = BoardService.getTotalBoardCount();
 		paging.pagingSetting(totalBoardCount, showBoardNum , curPageNum);
 		
 		List<BoardVo> list = BoardService.getBoardList(paging.getStartPageNum(), showBoardNum);
-		System.out.println("controllerpaging.getBlockStartNum()= "+ paging.getBlockStartNum());
 		model.addAttribute("paging", paging);
 		model.addAttribute("list", list);
 		

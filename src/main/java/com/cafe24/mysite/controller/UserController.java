@@ -88,12 +88,12 @@ public class UserController {
 		return "redirect:/";
 
 	}
-
+	
 	@RequestMapping(value = "/update")
 	public String update(Model model, HttpSession session) {
 
 		UserVo userVo = userService.getUser(((UserVo) session.getAttribute("authUser")).getNo());
-
+		
 		model.addAttribute("name", userVo.getName());
 		model.addAttribute("email", userVo.getEmail());
 		model.addAttribute("gender", userVo.getGender());
