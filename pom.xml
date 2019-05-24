@@ -126,7 +126,14 @@
 		<profile>
 			<id>production</id>
 			<build>
+
 				<resources>
+					<resource>
+						<directory>${project.basedir}/src/main/resources</directory>
+						<excludes>
+							<exclude>**/*.java</exclude>
+						</excludes>
+					</resource>
 					<resource>
 						<directory>${project.basedir}/src/main/production/resources</directory>
 						<excludes>
@@ -161,7 +168,7 @@
 			</dependencies>
 		</profile>
 	</profiles>
-	
+
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>
@@ -192,7 +199,7 @@
 					<password>manager</password>
 				</configuration>
 			</plugin>
-			
+
 		</plugins>
 	</build>
 </project>
