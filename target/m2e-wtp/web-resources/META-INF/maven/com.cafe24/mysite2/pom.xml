@@ -22,7 +22,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>${org.springframework-version}</version>
-
 		</dependency>
 
 		<!-- Spring Web -->
@@ -129,7 +128,7 @@
 			<build>
 				<resources>
 					<resource>
-						<directory>${project.basedir}/src/main/resources</directory>
+						<directory>${project.basedir}/src/main/production/resources</directory>
 						<excludes>
 							<exclude>**/*.java</exclude>
 						</excludes>
