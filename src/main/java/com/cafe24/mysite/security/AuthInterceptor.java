@@ -16,7 +16,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-
+		
 		// 1. handler 종류 확인
 		if (handler instanceof HandlerMethod == false) {
 			System.out.println(handler);
@@ -40,7 +40,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		if (auth == null) {
 			return true;
 		}
-
+		
 		// 6. @Auth(class또는 method에)가 붙어 있기 때문에
 		// 인증 여부 체크
 		HttpSession session = request.getSession();
@@ -48,7 +48,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			response.sendRedirect(request.getContextPath() + "/user/login");
 			return false;
 		}
-
+		
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 
 		if (authUser == null) { // 인증이 안되어 있음

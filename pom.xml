@@ -189,7 +189,7 @@
 					<warSourceDirectory>src/main/webapp</warSourceDirectory>
 				</configuration>
 			</plugin>
-			<plugin>
+			<!-- <plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<configuration>
@@ -198,8 +198,17 @@
 					<username>admin</username>
 					<password>manager</password>
 				</configuration>
+			</plugin> -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>tomcat-maven-plugin</artifactId>
+				<configuration>
+					<url>http://127.0.0.1/manager/text</url>
+					<path>/mysite2</path>
+					<username>admin</username>
+					<password>manager</password>
+				</configuration>
 			</plugin>
-
 		</plugins>
 	</build>
 </project>

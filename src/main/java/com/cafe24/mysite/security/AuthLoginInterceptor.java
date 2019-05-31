@@ -27,7 +27,6 @@ public class AuthLoginInterceptor extends HandlerInterceptorAdapter {
 		UserService userService = ac.getBean(UserService.class);
 		UserVo userVo = new UserVo(email, password);
 		
-		
 		UserVo authUser = userService.getUser(userVo);
 		if(authUser == null) {
 			response.sendRedirect(request.getContextPath()+"/user/login");
@@ -38,7 +37,6 @@ public class AuthLoginInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession(true);
 		session.setAttribute("authUser", authUser);
 		response.sendRedirect(request.getContextPath());
-		
 		
 		return false; // true일 뒤에 컨트롤러 연결된 것이 없으면 에러남
 		
